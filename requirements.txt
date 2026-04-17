@@ -1,0 +1,48 @@
+# ============================================================
+# claudewave — Python dependency list
+# ============================================================
+# See setup.md for full install commands (two Python envs +
+# ffmpeg + optional ComfyUI + optional fluidsynth).
+# ============================================================
+
+# ---------- Python 3.13 main environment (required) ----------
+librosa>=0.11          # audio analysis: beat, chroma, mel, pyin
+soundfile>=0.13        # wav/flac IO
+scipy>=1.14            # signal filters, resampling
+numpy>=2.0             # everything
+pedalboard>=0.9        # DSP effects chain (Spotify)
+demucs>=4.0            # stem separation (Meta)
+Pillow>=11.0           # visualizer PIL rendering
+# torch / torchaudio — install matching your CUDA:
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu124
+# or CPU-only:
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# ---------- Python 3.12 side environment (required for basic-pitch) ----------
+# basic-pitch's transitive deps don't build on Python 3.13 as of 2026.
+# Install separately under py -3.12:
+#   py -3.12 -m pip install numpy==1.26.4
+#   py -3.12 -m pip install --no-deps basic-pitch
+#   py -3.12 -m pip install onnxruntime pretty_midi librosa soundfile scipy mir_eval "resampy<0.4.3"
+
+# ---------- Optional extras (Python 3.13) ----------
+music21        # music-theory analysis (key detection, chord theory, MIDI composition)
+pyfiglet       # quick ASCII-art title generator for visualizers
+
+# fluidsynth (MIDI → audio via soundfonts, for acoustic timbres):
+#   pip install pyfluidsynth
+#   Requires fluidsynth binary: winget install FluidSynth.FluidSynth / brew install fluidsynth
+#   Requires a .sf2 soundfont (e.g. GeneralUser GS).
+#   Windows gotcha: pyfluidsynth hard-codes C:\tools\fluidsynth\bin — you may need to
+#   create that folder with libfluidsynth.dll, or set FLUIDSYNTH_LIB_PATH.
+
+# ---------- Not a Python package, but required ----------
+# ffmpeg — needs libx264 + libmp3lame (both standard), optionally h264_nvenc (NVIDIA GPU).
+# Use a "-full" build on Windows from gyan.dev/ffmpeg/builds.
+
+# ---------- Not a Python package, but recommended for AI layers ----------
+# ComfyUI (github.com/comfyanonymous/ComfyUI) running on 127.0.0.1:8188
+# With checkpoints in ComfyUI/models/checkpoints/:
+#   - ace_step_1.5_turbo_aio.safetensors   (text-to-music, ~3 GB)
+#   - ace_step_v1_3.5b.safetensors          (m2m style transfer, ~7 GB)
+# VRAM: ~8 GB for 1.5 turbo, ~12 GB for v1 3.5B.
