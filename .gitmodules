@@ -1,0 +1,3 @@
+[submodule "klattsch"]
+	path = klattsch
+	url = https://github.com/tgies/klattsch
