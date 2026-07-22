@@ -13,3 +13,5 @@ work/
 *.mp3
 *.flac
 *.mp4
+
+# vendored, has its own upstream we may fork
